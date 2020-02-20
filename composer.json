@@ -1,0 +1,14 @@
+{
+	"autoload": {
+		"files": [
+			"bootstrap.php",
+			"helpers/global.php",
+			"helpers/array.php",
+			"helpers/woo.php",
+			"helpers/http.php"
+		],
+		"psr-4": {
+			"vnh\\": "."
+		}
+	}
+}
