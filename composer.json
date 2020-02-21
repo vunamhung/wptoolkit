@@ -1,6 +1,6 @@
 {
 	"name": "vunamhung/wptoolkit",
-	"description": "This is a toolkit for developing a plugin.",
+	"description": "This is a toolkit for WordPress developer.",
 	"keywords": [
 		"wordpress",
 		"toolkit"
@@ -29,6 +29,7 @@
 		"files": [
 			"bootstrap.php",
 			"helpers/global.php",
+			"helpers/general.php",
 			"helpers/array.php",
 			"helpers/woo.php",
 			"helpers/http.php"
