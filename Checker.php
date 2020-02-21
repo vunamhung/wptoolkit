@@ -2,44 +2,27 @@
 
 namespace vnh;
 
-class Checker {
+use vnh\contracts\Initable;
+
+abstract class Checker implements Initable {
 	public $compare_version;
 	public $min_version;
-	public $name;
-	public $plugin_base;
+	public $context;
 
-	public function __construct($compare_version, $min_version, $name, $plugin_base) {
-		$this->min_version = $min_version;
+	public function __construct($compare_version, $context) {
 		$this->compare_version = $compare_version;
-		$this->name = $name;
-		$this->plugin_base = $plugin_base;
+		$this->context = $context;
+		$this->get_min_version();
 	}
 
-	public function maybe_deactivate_plugin() {
-		if ($this->is_not_compatible() && is_plugin_active($this->plugin_base)) {
-			deactivate_plugins($this->plugin_base);
+	public function get_min_version() {
+		global $wp_version;
 
-			if (isset($_GET['activate'])) {
-				unset($_GET['activate']);
-			}
+		if ($this->context === 'PHP') {
+			$this->min_version = PHP_VERSION;
+		} elseif ($this->context === 'WordPress') {
+			$this->min_version = $wp_version;
 		}
-	}
-
-	public function version_too_low($file) {
-		register_activation_hook($file, function () {
-			wp_die(
-				sprintf(
-					esc_html__(
-						'%s requires %s version %s or higher and cannot be activated. You are currently running version %s.',
-						'vnh_textdomain'
-					),
-					'vnh_name',
-					esc_html($this->name),
-					esc_html($this->min_version),
-					$this->compare_version
-				)
-			);
-		});
 	}
 
 	public function is_not_compatible() {
@@ -59,7 +42,7 @@ class Checker {
 					'vnh_textdomain'
 				),
 				'vnh_name',
-				esc_html($this->name),
+				esc_html($this->context),
 				$this->min_version,
 				$this->compare_version
 			);
