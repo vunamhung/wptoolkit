@@ -6,7 +6,7 @@
  * should have a `add_shortcode()` and a `callback()`.
  */
 
-namespace core\tools\contracts;
+namespace vnh\contracts;
 
 interface Shortcodeable {
 	public function add_shortcode();
