@@ -6,8 +6,8 @@ class Plugin_Checker extends Checker {
 	public $file;
 	public $plugin_base;
 
-	public function __construct($compare_version, $context, $file) {
-		parent::__construct($compare_version, $context);
+	public function __construct($min_version, $context, $file) {
+		parent::__construct($min_version, $context);
 		$this->file = $file;
 		$this->plugin_base = plugin_basename($file);
 	}
