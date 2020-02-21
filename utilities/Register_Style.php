@@ -2,6 +2,8 @@
 
 namespace vnh\utilities;
 
+use function vnh\flatten_version;
+
 class Register_Style {
 	public $handle;
 	public $args;
