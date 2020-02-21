@@ -9,19 +9,19 @@ abstract class Checker implements Initable {
 	public $min_version;
 	public $context;
 
-	public function __construct($compare_version, $context) {
-		$this->compare_version = $compare_version;
+	public function __construct($min_version, $context) {
+		$this->min_version = $min_version;
 		$this->context = $context;
-		$this->get_min_version();
+		$this->get_compare_version();
 	}
 
-	public function get_min_version() {
+	public function get_compare_version() {
 		global $wp_version;
 
 		if ($this->context === 'PHP') {
-			$this->min_version = PHP_VERSION;
+			$this->compare_version = PHP_VERSION;
 		} elseif ($this->context === 'WordPress') {
-			$this->min_version = $wp_version;
+			$this->compare_version = $wp_version;
 		}
 	}
 
