@@ -1,5 +1,7 @@
 <?php
 
+namespace vnh;
+
 function plugin_languages_path($plugin_file) {
 	return dirname(plugin_basename($plugin_file)) . '/languages';
 }
