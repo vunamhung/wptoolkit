@@ -1,8 +1,6 @@
 <?php
 
-namespace vnh\utilities;
-
-use function vnh\flatten_version;
+namespace vnh;
 
 class Register_Script {
 	public $handle;
