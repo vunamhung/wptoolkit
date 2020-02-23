@@ -1,12 +1,12 @@
 <?php
 
-namespace vnh\admin;
+namespace vnh;
 
 use vnh\contracts\Bootable;
 
 /**
  * Add Docs and FAQ url to row meta of plugin
- * @package vnh\admin
+ * @package vnh
  */
 class Plugin_Row_Meta implements Bootable {
 	public $plugin_base;
