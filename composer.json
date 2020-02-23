@@ -26,6 +26,8 @@
 		"files": [
 			"bootstrap.php",
 			"helpers/global.php",
+			"helpers/core.php",
+			"helpers/conditional.php",
 			"helpers/general.php",
 			"helpers/array.php",
 			"helpers/woo.php",

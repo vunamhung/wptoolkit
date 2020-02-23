@@ -2,10 +2,6 @@
 
 namespace vnh;
 
-function plugin_languages_path($plugin_file) {
-	return dirname(plugin_basename($plugin_file)) . '/languages';
-}
-
 function flatten_version($version) {
 	if (empty($version)) {
 		return null;

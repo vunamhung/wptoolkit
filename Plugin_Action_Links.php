@@ -1,12 +1,12 @@
 <?php
 
-namespace vnh\admin;
+namespace vnh;
 
 use vnh\contracts\Bootable;
 
 /**
  * Add setting page link and go to pro url
- * @package vnh\admin
+ * @package vnh
  */
 class Plugin_Action_Links implements Bootable {
 	public $plugin_base;
