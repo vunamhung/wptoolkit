@@ -20,7 +20,7 @@ class Our_Plugins {
 		foreach ($this->get_plugins_list() as $plugin) {
 			$html .= sprintf(
 				'<div class="card">
-                  <div class="card-image"><img class="img-responsive" src="%s" alt="%s"></div>
+                  <div class="card-image">%s</div>
                   <div class="card-header">
                     <a href="%s" target="_blank"><button class="btn btn-primary float-right">%s</button></a>
                     <div class="card-title h5">%s</div>
@@ -28,8 +28,7 @@ class Our_Plugins {
                   </div>
                   <div class="card-body">%s</div>
                 </div>',
-				!empty($plugin['img']) ? $plugin['img'] : get_svg_placeholder(300, 200),
-				$plugin['name'],
+				!empty($plugin['img']) ? $plugin['img'] : get_svg_placeholder(392, 200),
 				$plugin['link'],
 				__('More info', 'vnh_textdomain'),
 				$plugin['name'],
