@@ -36,5 +36,21 @@
 		"psr-4": {
 			"vnh\\": "."
 		}
+	},
+	"archive": {
+		"exclude": [
+			"/bin",
+			"/vendor",
+			"/tests",
+			"/scss",
+			"/sass",
+			"*/composer.*",
+			"*/.*",
+			"*.dist",
+			"*.md",
+			"*.scss",
+			"LICENSE",
+			"*.sh"
+		]
 	}
 }
