@@ -40,3 +40,26 @@ function get_svg_icon($args) {
 
 	return wp_kses($svg, 'svg');
 }
+
+function get_google_fonts_url($font) {
+	$font_families = array();
+
+	$font_families[] = $font;
+
+	$query_args = array(
+		'family' => rawurlencode(implode('|', $font_families)),
+		'subset' => rawurlencode('latin,latin-ext'),
+	);
+
+	$fonts_url = add_query_arg($query_args, 'https://fonts.googleapis.com/css');
+
+	return esc_url_raw($fonts_url);
+}
+
+function get_svg_placeholder($width, $height) {
+	return sprintf(
+		'<svg xmlns="http://www.w3.org/2000/svg" width="%1$d" height="%2$d" viewBox="0 0 %1$d %2$d"><rect fill="#ddd" width="%1$d" height="%2$d"/> <text fill="rgba(0,0,0,0.5)" font-family="sans-serif" font-size="30" dy="10.5" font-weight="bold" x="50%%" y="50%%" text-anchor="middle">%1$d × %2$d</text></svg>',
+		esc_html($width),
+		esc_html($height)
+	);
+}
