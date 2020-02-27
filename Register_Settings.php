@@ -8,9 +8,10 @@ use vnh\contracts\Renderable;
 
 abstract class Register_Settings implements Initable, Bootable, Renderable {
 	public $default_settings;
-	public $setting_fields;
 	public $option_name;
 	public $prefix;
+
+	abstract public function register_setting_fields();
 
 	public function init() {
 		if (!empty($this->default_settings) && empty(get_option($this->get_option_name()))) {
@@ -30,7 +31,7 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		$html = '<div class="settings info-tab-content">';
 		$html .= '<form method="post" action="options.php" id="settings-tab" enctype="multipart/form-data">';
 		ob_start();
-		foreach ($this->setting_fields as $section => $values) {
+		foreach ($this->register_setting_fields() as $section => $values) {
 			$option_group = $this->prefix . '_settings_' . $section;
 			$page = $option_group;
 			settings_fields($option_group);
@@ -46,11 +47,11 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 	}
 
 	public function build_settings() {
-		if (empty($this->setting_fields)) {
+		if (empty($this->register_setting_fields())) {
 			return;
 		}
 
-		foreach ($this->setting_fields as $section_id => $section_values) {
+		foreach ($this->register_setting_fields() as $section_id => $section_values) {
 			$section = $option_group = $page = $this->prefix . '_settings_' . $section_id;
 
 			$callback = function () use ($section_values) {
@@ -218,10 +219,7 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		}
 		$html .= '</tbody>';
 		$html .= '<tfoot><tr><th class="add-row">';
-		$html .= sprintf(
-			'<input data-repeater-create type="button" class="button button-primary" value="%s"/>',
-			$field['options']['add_button']
-		);
+		$html .= sprintf('<input data-repeater-create type="button" class="button button-primary" value="%s"/>', $field['options']['add_button']);
 		$html .= '</th></tr></tfoot>';
 		$html .= '</table>';
 
