@@ -31,7 +31,7 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		$html = '<div class="settings info-tab-content">';
 		$html .= '<form method="post" action="options.php" id="settings-tab" enctype="multipart/form-data">';
 		ob_start();
-		$this->the_nonce();
+		wp_nonce_field($this->nonce(), $this->nonce());
 		foreach ($this->register_setting_fields() as $section => $values) {
 			$option_group = $this->prefix . '_settings_' . $section;
 			$page = $option_group;
@@ -325,16 +325,8 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		return implode(' ', $custom_attributes);
 	}
 
-	public function the_nonce() {
-		wp_nonce_field($this->nonce_action(), $this->nonce_name());
-	}
-
-	public function nonce_action() {
-		return "save_{$this->get_option_name()}";
-	}
-
-	public function nonce_name() {
-		return "{$this->get_option_name()}_save";
+	public function nonce() {
+		return sprintf('%s_nonce', $this->get_option_name());
 	}
 
 	public function get_options() {
