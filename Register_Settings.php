@@ -33,10 +33,10 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		ob_start();
 		wp_nonce_field($this->nonce(), $this->nonce());
 		foreach ($this->register_setting_fields() as $section => $values) {
-			$option_group = $this->prefix . '_settings_' . $section;
+			$option_group = $this->get_prefix() . '_settings_' . $section;
 			$page = $option_group;
 			settings_fields($option_group);
-			do_settings_sections($page);
+			$this->do_settings_sections($page);
 		}
 		$html .= ob_get_clean();
 		$html .= get_submit_button();
@@ -53,7 +53,7 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		}
 
 		foreach ($this->register_setting_fields() as $section_id => $section_values) {
-			$section = $option_group = $page = $this->prefix . '_settings_' . $section_id;
+			$section = $option_group = $page = $this->get_prefix() . '_settings_' . $section_id;
 
 			$callback = static function () use ($section_values) {
 				if (!empty($section_values['description'])) {
@@ -333,6 +333,31 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		return sprintf('%s_nonce', $this->get_option_name());
 	}
 
+	public function do_settings_sections($page) {
+		global $wp_settings_sections, $wp_settings_fields;
+
+		if (!isset($wp_settings_sections[$page])) {
+			return;
+		}
+
+		foreach ((array) $wp_settings_sections[$page] as $section) {
+			if ($section['title']) {
+				echo "<h4>{$section['title']}</h4>\n";
+			}
+
+			if ($section['callback']) {
+				call_user_func($section['callback'], $section);
+			}
+
+			if (!isset($wp_settings_fields) || !isset($wp_settings_fields[$page]) || !isset($wp_settings_fields[$page][$section['id']])) {
+				continue;
+			}
+			echo '<table class="form-table" role="presentation">';
+			do_settings_fields($page, $section['id']);
+			echo '</table>';
+		}
+	}
+
 	public function get_options() {
 		return get_option($this->get_option_name());
 	}
@@ -341,7 +366,11 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		return !empty($this->get_options()[$id]) ? $this->get_options()[$id] : false;
 	}
 
+	public function get_prefix() {
+		return str_replace('-', '_', $this->prefix);
+	}
+
 	public function get_option_name() {
-		return sprintf('%s_%s_settings', $this->prefix, $this->option_name);
+		return sprintf('%s_%s_settings', $this->get_prefix(), $this->option_name);
 	}
 }
