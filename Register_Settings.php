@@ -98,14 +98,15 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 	}
 
 	public function display_field_toggle($field, $option) {
-		$description = !empty($field['description'])
-			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['description'])
+		$tooltip = !empty($field['tooltip'])
+			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['tooltip'])
 			: null;
+		$description = !empty($field['description']) ?: null;
 		$label =
 			'<label for="%1$s" class="toggle"><span><svg width="10px" height="10px" ><path d="M5,1 L5,1 C2.790861,1 1,2.790861 1,5 L1,5 C1,7.209139 2.790861,9 5,9 L5,9 C7.209139,9 9,7.209139 9,5 L9,5 C9,2.790861 7.209139,1 5,1 L5,9 L5,1 Z"></path></svg></span></label>';
 
 		$output = sprintf(
-			$description . '<input type="checkbox" name="%1$s" class="input-toggle" id="%1$s" value="true" %2$s/>' . $label,
+			$tooltip . '<input type="checkbox" name="%1$s" class="input-toggle" id="%1$s" value="true" %2$s/>' . $description . $label,
 			$this->get_name_attr($field),
 			!empty($option[$field['id']]) ? 'checked' : null
 		);
@@ -114,12 +115,13 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 	}
 
 	public function display_field_text($field, $option) {
-		$description = !empty($field['description'])
-			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['description'])
+		$tooltip = !empty($field['tooltip'])
+			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['tooltip'])
 			: null;
+		$description = !empty($field['description']) ? sprintf('<p>%s</p>', $field['description']) : null;
 
 		$output = sprintf(
-			$description . '<input type="text" name="%1$s" id="%1$s" %3$s value="%2$s"/>',
+			$tooltip . '<input type="text" name="%1$s" id="%1$s" %3$s value="%2$s"/>' . $description,
 			$this->get_name_attr($field),
 			!empty($option[$field['id']]) ? esc_attr($option[$field['id']]) : null,
 			$this->get_custom_attribute_html($field)
@@ -129,12 +131,13 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 	}
 
 	public function display_field_textarea($field, $option) {
-		$description = !empty($field['description'])
-			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['description'])
+		$tooltip = !empty($field['tooltip'])
+			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['tooltip'])
 			: null;
+		$description = !empty($field['description']) ? sprintf('<p>%s</p>', $field['description']) : null;
 
 		$output = sprintf(
-			$description . '<textarea name="%1$s" id="%1$s" %3$s >%2$s</textarea>',
+			$tooltip . '<textarea name="%1$s" id="%1$s" %3$s >%2$s</textarea>' . $description,
 			$this->get_name_attr($field),
 			!empty($option[$field['id']]) ? esc_attr($option[$field['id']]) : null,
 			$this->get_custom_attribute_html($field)
@@ -144,9 +147,10 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 	}
 
 	public function display_field_select($field, $option) {
-		$description = !empty($field['description'])
-			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['description'])
+		$tooltip = !empty($field['tooltip'])
+			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['tooltip'])
 			: null;
+		$description = !empty($field['description']) ? sprintf('<p>%s</p>', $field['description']) : null;
 
 		$options = '';
 		foreach ($field['options'] as $value => $label) {
@@ -158,7 +162,7 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 			);
 		}
 		$output = sprintf(
-			$description . '<select type="text" name="%1$s" id="%1$s" %2$s>%3$s</select>',
+			$tooltip . '<select type="text" name="%1$s" id="%1$s" %2$s>%3$s</select>' . $description,
 			$this->get_name_attr($field),
 			!empty($field['placeholder']) ? sprintf('placeholder="%s"', esc_attr($field['placeholder'])) : null,
 			$options
@@ -168,12 +172,13 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 	}
 
 	public function display_field_number($field, $option) {
-		$description = !empty($field['description'])
-			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['description'])
+		$tooltip = !empty($field['tooltip'])
+			? sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $field['tooltip'])
 			: null;
+		$description = !empty($field['description']) ? sprintf('<p>%s</p>', $field['description']) : null;
 
 		$output = sprintf(
-			$description . '<input type="number" name="%1$s" id="%1$s" %3$s %4$s %5$s %6$s value="%2$s"/>',
+			$tooltip . '<input type="number" name="%1$s" id="%1$s" %3$s %4$s %5$s %6$s value="%2$s"/>' . $description,
 			$this->get_name_attr($field),
 			isset($option[$field['id']]) ? esc_attr($option[$field['id']]) : null,
 			isset($field['options']['min']) ? sprintf('min="%s"', esc_attr($field['options']['min'])) : null,
@@ -195,16 +200,15 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		$html .= '<thead><tr>';
 
 		foreach ($field['children'] as $child) {
-			$html .= sprintf(
-				'<th>%s %s</th>',
-				$child['name'],
-				!empty($child['description'])
-					? sprintf(
-						'<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>',
-						$child['description']
-					)
-					: null
-			);
+			if (!empty($child['tooltip'])) {
+				$html .= sprintf(
+					'<th>%s %s</th>',
+					$child['name'],
+					sprintf('<a class="hint--top hint--medium" aria-label="%s"><span class="woocommerce-help-tip"></span></a>', $child['tooltip'])
+				);
+			} else {
+				$html .= sprintf('<th>%s %s</th>', $child['name'], null);
+			}
 		}
 
 		$html .= sprintf('<th>%s</th>', __('Actions', 'vnh_textdomain'));
