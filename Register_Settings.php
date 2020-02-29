@@ -358,6 +358,10 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		}
 	}
 
+	public function update_option($value, $autoload = null) {
+		return update_option($this->get_option_name(), $value, $autoload);
+	}
+
 	public function get_options() {
 		return get_option($this->get_option_name());
 	}
