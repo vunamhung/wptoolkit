@@ -6,9 +6,9 @@ class Our_Plugins {
 	public $plugin_list_file_url;
 	public $transient_name;
 
-	public function __construct($plugin_list_file_url, $transient_name) {
+	public function __construct($plugin_list_file_url) {
 		$this->plugin_list_file_url = $plugin_list_file_url;
-		$this->transient_name = $transient_name;
+		$this->transient_name = sprintf('%s_plugins_list', to_snake_case(THEME_SLUG));
 	}
 
 	public function __toString() {

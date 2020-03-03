@@ -164,7 +164,7 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		$output = sprintf(
 			$tooltip . '<select type="text" name="%1$s" id="%1$s" %2$s>%3$s</select>' . $description,
 			$this->get_name_attr($field),
-			!empty($field['placeholder']) ? sprintf('placeholder="%s"', esc_attr($field['placeholder'])) : null,
+			$this->get_custom_attribute_html($field),
 			$options
 		);
 
@@ -178,13 +178,10 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		$description = !empty($field['description']) ? sprintf('<p>%s</p>', $field['description']) : null;
 
 		$output = sprintf(
-			$tooltip . '<input type="number" name="%1$s" id="%1$s" %3$s %4$s %5$s %6$s value="%2$s"/>' . $description,
+			$tooltip . '<input type="number" name="%1$s" id="%1$s" %3$s value="%2$s"/>' . $description,
 			$this->get_name_attr($field),
 			isset($option[$field['id']]) ? esc_attr($option[$field['id']]) : null,
-			isset($field['options']['min']) ? sprintf('min="%s"', esc_attr($field['options']['min'])) : null,
-			isset($field['options']['max']) ? sprintf('max="%s"', esc_attr($field['options']['max'])) : null,
-			isset($field['options']['step']) ? sprintf('step="%s"', esc_attr($field['options']['step'])) : null,
-			!empty($field['placeholder']) ? sprintf('placeholder="%s"', esc_attr($field['placeholder'])) : null
+			$this->get_custom_attribute_html($field)
 		);
 
 		echo $output;
@@ -358,12 +355,19 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 		}
 	}
 
-	public function update_option($value, $autoload = null) {
+	public function update_options($value, $autoload = null) {
 		return update_option($this->get_option_name(), $value, $autoload);
 	}
 
 	public function get_options() {
 		return get_option($this->get_option_name());
+	}
+
+	public function update_option($id, $value, $autoload = null) {
+		$values = $this->get_options();
+		$values[$id] = $value;
+
+		return $this->update_options($values, $autoload);
 	}
 
 	public function get_option($id) {
