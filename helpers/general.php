@@ -2,6 +2,20 @@
 
 namespace vnh;
 
+function to_camel_case($string): string {
+	$string = str_replace(['-', '_'], ' ', $string);
+	$string = ucwords(strtolower($string));
+	$string = str_replace(' ', '', $string);
+
+	return $string;
+}
+
+function to_snake_case($string): string {
+	$string = str_replace('-', '_', $string);
+
+	return $string;
+}
+
 function flatten_version($version) {
 	if (empty($version)) {
 		return null;
@@ -14,6 +28,10 @@ function flatten_version($version) {
 	}
 
 	return implode('', $parts);
+}
+
+function the_svg_icon($args) {
+	echo wp_kses(get_svg_icon($args), 'svg');
 }
 
 function get_svg_icon($args) {
@@ -62,4 +80,26 @@ function get_svg_placeholder($width, $height) {
 		esc_html($width),
 		esc_html($height)
 	);
+}
+
+/*
+ * TEMPLATES
+ */
+function include_template($file, &$params = null) {
+	$VARS = &$params;
+	include get_theme_file_path($file);
+}
+
+function require_template($file, &$params = null) {
+	$VARS = &$params;
+	require get_theme_file_path($file);
+}
+
+function get_template($file, &$params = null) {
+	ob_start();
+
+	$VARS = &$params;
+	require get_theme_file_path($file);
+
+	return ob_get_clean();
 }
