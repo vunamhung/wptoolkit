@@ -82,7 +82,6 @@ abstract class Register_Settings implements Initable, Bootable, Renderable {
 	 * Output setting field
 	 *
 	 * @param $args
-	 *
 	 * @uses display_field_toggle(), display_field_text(), display_field_textarea()
 	 * @uses display_field_select(), display_field_number(), display_field_repeater()
 	 */
