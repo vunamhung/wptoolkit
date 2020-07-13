@@ -60,14 +60,14 @@ function get_svg_icon($args) {
 }
 
 function get_google_fonts_url($font) {
-	$font_families = array();
+	$font_families = [];
 
 	$font_families[] = $font;
 
-	$query_args = array(
+	$query_args = [
 		'family' => rawurlencode(implode('|', $font_families)),
 		'subset' => rawurlencode('latin,latin-ext'),
-	);
+	];
 
 	$fonts_url = add_query_arg($query_args, 'https://fonts.googleapis.com/css');
 
