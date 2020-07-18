@@ -13,7 +13,7 @@ class Register_Script {
 			'version' => null,
 			'in_footer' => true,
 			'have_min' => false,
-			'inline_script_position' => 'after',
+			'inline_script_position' => 'before',
 		]);
 		$this->args = apply_filters("vnh/register/script/$handle/args", $this->args);
 	}
