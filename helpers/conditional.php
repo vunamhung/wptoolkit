@@ -13,11 +13,7 @@ function is_bot() {
 }
 
 function is_woo() {
-	if (function_exists('is_woocommerce')) {
-		return (bool) is_woocommerce();
-	}
-
-	return false;
+	return is_plugin_active('woocommerce/woocommerce.php');
 }
 
 function is_post_type($post_type) {
