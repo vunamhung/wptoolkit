@@ -2,9 +2,25 @@
 
 namespace vnh\checker;
 
+/**
+ * Abstract Plugin Checker class
+ * 
+ * Plugin-specific version compatibility checking
+ * 
+ * @package vnh\checker
+ */
 abstract class Plugin_Checker extends Checker {
+	/**
+	 * Plugin file path
+	 * @var string
+	 */
 	public $file;
 
+	/**
+	 * Maybe deactivate plugin if not compatible
+	 * 
+	 * @return void
+	 */
 	public function maybe_deactivate_plugin() {
 		if ($this->is_not_compatible() && is_plugin_active(plugin_basename($this->file))) {
 			deactivate_plugins(plugin_basename($this->file));
@@ -15,6 +31,11 @@ abstract class Plugin_Checker extends Checker {
 		}
 	}
 
+	/**
+	 * Handle version too low scenario
+	 * 
+	 * @return void
+	 */
 	public function version_too_low() {
 		if ($this->is_not_compatible()) {
 			register_activation_hook($this->file, function () {

@@ -8,11 +8,28 @@ use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
 
+/**
+ * Abstract Route class
+ * 
+ * Base class for REST API routes
+ * 
+ * @package vnh\api
+ */
 abstract class Route implements RouteInterface, Bootable {
+	/**
+	 * Boot the route by registering REST API hooks
+	 * 
+	 * @return void
+	 */
 	public function boot() {
 		add_action('rest_api_init', [$this, 'register_routes']);
 	}
 
+	/**
+	 * Register REST routes
+	 * 
+	 * @return void
+	 */
 	public function register_routes() {
 		foreach ($this->get_args() as $arg) {
 			register_rest_route($this->get_namespace(), $this->get_path(), $arg);
@@ -56,18 +73,46 @@ abstract class Route implements RouteInterface, Bootable {
 		return $response;
 	}
 
+	/**
+	 * Get route response for GET requests
+	 * 
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response|WP_Error
+	 * @throws RouteException
+	 */
 	protected function get_route_response(WP_REST_Request $request) {
 		throw new RouteException('vnh_rest_invalid_endpoint', __('Method not implemented', 'vnh_textdomain'), 404);
 	}
 
+	/**
+	 * Get route response for POST requests
+	 * 
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response|WP_Error
+	 * @throws RouteException
+	 */
 	protected function get_route_post_response(WP_REST_Request $request) {
 		throw new RouteException('vnh_rest_invalid_endpoint', __('Method not implemented', 'vnh_textdomain'), 404);
 	}
 
+	/**
+	 * Get route response for PUT/PATCH requests
+	 * 
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response|WP_Error
+	 * @throws RouteException
+	 */
 	protected function get_route_update_response(WP_REST_Request $request) {
 		throw new RouteException('vnh_rest_invalid_endpoint', __('Method not implemented', 'vnh_textdomain'), 404);
 	}
 
+	/**
+	 * Get route response for DELETE requests
+	 * 
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response|WP_Error
+	 * @throws RouteException
+	 */
 	protected function get_route_delete_response(WP_REST_Request $request) {
 		throw new RouteException('vnh_rest_invalid_endpoint', __('Method not implemented', 'vnh_textdomain'), 404);
 	}

@@ -2,9 +2,26 @@
 
 namespace vnh\cache;
 
+/**
+ * Object Cache class
+ * 
+ * WordPress object cache implementation
+ * 
+ * @package vnh\cache
+ */
 class ObjectCache extends Cache {
+	/**
+	 * Cache group
+	 * @var string
+	 */
 	protected $group;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param string $key Cache key
+	 * @param string $group Cache group
+	 */
 	public function __construct($key, $group = '') {
 		parent::__construct($key);
 

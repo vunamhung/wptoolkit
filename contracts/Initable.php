@@ -9,5 +9,10 @@
 namespace vnh\contracts;
 
 interface Initable {
+	/**
+	 * Initialize the class
+	 * 
+	 * @return void
+	 */
 	public function init();
 }

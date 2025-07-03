@@ -4,10 +4,33 @@ namespace vnh;
 
 use vnh\contracts\Bootable;
 
+/**
+ * Abstract Register_Assets Class
+ * 
+ * Base class for registering scripts and styles in WordPress
+ * 
+ * @package vnh
+ */
 abstract class Register_Assets implements Bootable {
+	/**
+	 * Scripts to be registered
+	 * 
+	 * @var array
+	 */
 	public $scripts;
+	
+	/**
+	 * Styles to be registered
+	 * 
+	 * @var array
+	 */
 	public $styles;
 
+	/**
+	 * Register scripts with WordPress
+	 * 
+	 * @return void
+	 */
 	public function register_scripts() {
 		if (empty($this->scripts)) {
 			return;
@@ -19,6 +42,11 @@ abstract class Register_Assets implements Bootable {
 		}
 	}
 
+	/**
+	 * Register styles with WordPress
+	 * 
+	 * @return void
+	 */
 	public function register_styles() {
 		if (empty($this->styles)) {
 			return;

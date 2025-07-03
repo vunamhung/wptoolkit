@@ -4,11 +4,40 @@ namespace vnh;
 
 use vnh\contracts\Renderable;
 
+/**
+ * Class System_Status
+ * 
+ * Provides system diagnostic information and download functionality
+ * 
+ * @package vnh
+ */
 class System_Status implements Renderable {
+	/**
+	 * Default configuration options
+	 * 
+	 * @var array
+	 */
 	public $defaults;
+	
+	/**
+	 * Configuration arguments
+	 * 
+	 * @var array
+	 */
 	public $args;
+	
+	/**
+	 * URL for downloading debug file
+	 * 
+	 * @var string
+	 */
 	public $debug_file_url;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param array $args Configuration arguments
+	 */
 	public function __construct($args = []) {
 		$this->defaults = [
 			'download_button_text' => esc_attr_x('Download', 'Download log file to your computer', 'vnh_textdomain'),
@@ -21,10 +50,20 @@ class System_Status implements Renderable {
 		$this->http_prepare_download_log();
 	}
 
+	/**
+	 * Convert object to string
+	 * 
+	 * @return string Rendered HTML output
+	 */
 	public function __toString() {
 		return $this->render();
 	}
 
+	/**
+	 * Render the system status HTML
+	 * 
+	 * @return string HTML output for system status display
+	 */
 	public function render() {
 		$html = '<div class="diagnostic info-tab-content">';
 		$html .= '<textarea class="debug-log-textarea" readonly>';
@@ -36,6 +75,13 @@ class System_Status implements Renderable {
 		return wp_kses($html, 'default');
 	}
 
+	/**
+	 * Prepare and handle download of diagnostic log file
+	 * 
+	 * Handles HTTP request for downloading system diagnostic information as a text file
+	 * 
+	 * @return void
+	 */
 	public function http_prepare_download_log() {
 		if (isset($_GET['download-log']) && wp_verify_nonce($_GET['nonce'], 'download-log')) {
 			$url = wp_parse_url(home_url());
@@ -51,6 +97,15 @@ class System_Status implements Renderable {
 		}
 	}
 
+	/**
+	 * Render diagnostic information as text
+	 * 
+	 * Generates detailed system diagnostic information including WordPress version,
+	 * server info, database info, debug settings, and theme information
+	 * 
+	 * @param string $html Initial HTML content (optional)
+	 * @return string Formatted diagnostic information
+	 */
 	public function render_diagnostic_info($html = '') {
 		foreach ($this->get_diagnostic_info() as $section):
 			$key_lengths = array_map('strlen', array_keys($section));
@@ -89,6 +144,14 @@ class System_Status implements Renderable {
 		return $html;
 	}
 
+	/**
+	 * Get diagnostic information
+	 * 
+	 * Collects and organizes system diagnostic information including WordPress configuration,
+	 * server information, database details, theme information, and plugin status
+	 * 
+	 * @return array Organized array of diagnostic information
+	 */
 	public function get_diagnostic_info() {
 		global $wpdb;
 

@@ -2,6 +2,13 @@
 
 namespace vnh\cache;
 
+/**
+ * Transient Cache class
+ * 
+ * WordPress transient cache implementation
+ * 
+ * @package vnh\cache
+ */
 class Transient extends Cache {
 	/**
 	 * Cache expiration in seconds
@@ -10,6 +17,12 @@ class Transient extends Cache {
 	 */
 	protected $expiration;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param string $key Cache key
+	 * @param int $expiration Cache expiration in seconds
+	 */
 	public function __construct($key, $expiration = 0) {
 		parent::__construct($key);
 

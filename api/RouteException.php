@@ -4,6 +4,13 @@ namespace vnh\api;
 
 use Exception;
 
+/**
+ * Class RouteException
+ * 
+ * Custom exception class for API route errors
+ * 
+ * @package vnh\api
+ */
 class RouteException extends Exception {
 	/**
 	 * Sanitized error code.

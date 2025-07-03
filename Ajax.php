@@ -2,13 +2,20 @@
 
 namespace vnh;
 
+/**
+ * Class Ajax
+ * 
+ * Provides utility methods for handling AJAX requests in WordPress
+ * 
+ * @package vnh
+ */
 class Ajax {
 	/**
 	 * Verifies nonce string
 	 *
-	 * @param string $action action name, as defined while creating nonce hash, required
+	 * @param string|null $action Action name, as defined while creating nonce hash, required
 	 * @param string $nonce $_REQUEST array key where to search for nonce, default 'nonce'
-	 * @return void           dies when nonce is wrong
+	 * @return void Dies when nonce is wrong
 	 */
 	public function verify_nonce($action = null, $nonce = 'nonce') {
 		if ($action === null) {
@@ -21,9 +28,9 @@ class Ajax {
 	}
 
 	/**
-	 * Prints success for JS
+	 * Prints success response for JavaScript
 	 *
-	 * @param mixed $data anything
+	 * @param mixed $data Data to send in the success response
 	 * @return void
 	 */
 	public function success($data) {
@@ -31,9 +38,9 @@ class Ajax {
 	}
 
 	/**
-	 * Prints error for JS
+	 * Prints error response for JavaScript
 	 *
-	 * @param mixed $data anything
+	 * @param mixed $data Data to send in the error response
 	 * @return void
 	 */
 	public function error($data) {
@@ -41,10 +48,10 @@ class Ajax {
 	}
 
 	/**
-	 * Responds to JS with message
+	 * Responds to JavaScript with success or error message
 	 *
-	 * @param mixed $success if empty, nothing will be passed
-	 * @param array $errors if not empty, an error will be returned
+	 * @param mixed $success Success data, if empty nothing will be passed
+	 * @param array $errors Error data, if not empty an error will be returned
 	 * @return void
 	 */
 	public function response($success = null, $errors = []) {

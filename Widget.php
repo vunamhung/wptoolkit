@@ -5,11 +5,40 @@ namespace vnh;
 use WP_Customize_Manager;
 use WP_Widget;
 
+/**
+ * Abstract Widget Class
+ * 
+ * Base class for creating custom WordPress widgets with enhanced functionality
+ * 
+ * @package vnh
+ */
 abstract class Widget extends WP_Widget {
+	/**
+	 * Default field values
+	 * 
+	 * @var array
+	 */
 	public $defaults;
+	
+	/**
+	 * Widget form fields configuration
+	 * 
+	 * @var array
+	 */
 	public $fields;
+	
+	/**
+	 * Widget display configuration
+	 * 
+	 * @var array|null
+	 */
 	public $display;
 
+	/**
+	 * Constructor
+	 * 
+	 * Initializes the widget with configuration from the config() method
+	 */
 	public function __construct() {
 		$config = $this->config();
 
@@ -44,6 +73,13 @@ abstract class Widget extends WP_Widget {
 		parent::__construct($id_base, $name, $widget_options, $control_options);
 	}
 
+	/**
+	 * Widget configuration
+	 * 
+	 * Must be implemented by child classes to provide widget configuration
+	 * 
+	 * @return array Widget configuration array
+	 */
 	abstract public function config();
 
 	/**
@@ -74,10 +110,26 @@ abstract class Widget extends WP_Widget {
 		}
 	}
 
+	/**
+	 * Display custom field content
+	 * 
+	 * @param string $field_name Field name
+	 * @param array $field_values Field configuration
+	 * @param array $instance Widget instance data
+	 * @return void
+	 */
 	public function display_field_custom($field_name, $field_values, $instance) {
 		echo wp_kses_post($field_values['content']);
 	}
 
+	/**
+	 * Display text input field
+	 * 
+	 * @param string $field_name Field name
+	 * @param array $field_values Field configuration
+	 * @param array $instance Widget instance data
+	 * @return void
+	 */
 	public function display_field_text($field_name, $field_values, $instance) {
 		printf(
 			'<p><label for="%1$s">%2$s</label><input type="text" field_name="%1$s" class="widefat" name="%3$s" value="%4$s"></p>',
@@ -88,6 +140,14 @@ abstract class Widget extends WP_Widget {
 		);
 	}
 
+	/**
+	 * Display checkbox field
+	 * 
+	 * @param string $field_name Field name
+	 * @param array $field_values Field configuration
+	 * @param array $instance Widget instance data
+	 * @return void
+	 */
 	public function display_field_checkbox($field_name, $field_values, $instance) {
 		printf(
 			'<p><input type="checkbox" field_name="%1$s" class="checkbox" name="%3$s" %4$s value="1"><label for="%1$s">%2$s</label></p>',
@@ -98,6 +158,14 @@ abstract class Widget extends WP_Widget {
 		);
 	}
 
+	/**
+	 * Display textarea field
+	 * 
+	 * @param string $field_name Field name
+	 * @param array $field_values Field configuration
+	 * @param array $instance Widget instance data
+	 * @return void
+	 */
 	public function display_field_textarea($field_name, $field_values, $instance) {
 		printf(
 			'<p><label for="%1$s">%2$s</label><textarea field_name="%1$s" class="widefat" name="%3$s" rows="%5$s">%4$s</textarea></p>',
@@ -109,6 +177,14 @@ abstract class Widget extends WP_Widget {
 		);
 	}
 
+	/**
+	 * Display number input field
+	 * 
+	 * @param string $field_name Field name
+	 * @param array $field_values Field configuration
+	 * @param array $instance Widget instance data
+	 * @return void
+	 */
 	public function display_field_number($field_name, $field_values, $instance) {
 		printf(
 			'<p><label for="%1$s">%2$s</label><input type="number" field_name="%1$s" class="widefat" name="%3$s" min="%5$s" max="%6$s" value="%4$s"/></p>',
@@ -121,6 +197,14 @@ abstract class Widget extends WP_Widget {
 		);
 	}
 
+	/**
+	 * Display select dropdown field
+	 * 
+	 * @param string $field_name Field name
+	 * @param array $field_values Field configuration
+	 * @param array $instance Widget instance data
+	 * @return void
+	 */
 	public function display_field_select($field_name, $field_values, $instance) {
 		if (empty($field_values['subtype'])) {
 			$all_options = '';

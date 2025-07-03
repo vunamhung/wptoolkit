@@ -9,6 +9,18 @@
 namespace vnh\contracts;
 
 interface Shortcodeable {
+	/**
+	 * Add shortcode
+	 * 
+	 * @return void
+	 */
 	public function add_shortcode();
+	
+	/**
+	 * Shortcode callback
+	 * 
+	 * @param array $atts Shortcode attributes
+	 * @return string
+	 */
 	public function callback($atts);
 }
